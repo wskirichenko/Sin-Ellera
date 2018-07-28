@@ -14,7 +14,12 @@ var kolN = 132000,  // Кол-во итераций
     masPQ4 = [],    // Массив с подходящими 4
     masR1 = [],     // Массив с результ Модуля (r)
     masFi1 = [],    // Массив с результ аргумента (fi) 
+    iMasBeg1 = [],
+    iMasEnd1 = [],
+    yMasBeg1 = [],
+    yMasEnd1 = [], 
     countPQ = 0,    // Счётчик для массивов подходящих и модуля
+    countgraf = 0,
 
     k = 0,
     P = 1,
@@ -23,6 +28,7 @@ var kolN = 132000,  // Кол-во итераций
     summ = 0,       // Сумма логорифмов
     count = 0,      // для вывода в табл
     kolcifr = 12,   // Кол-во отображаемых цифр в ячейках (вместе с '.' и '-')
+    Massht = 4,
 
     sell_1 = document.getElementsByClassName('s1'),
     temp = document.getElementsByClassName('temp'),
@@ -142,8 +148,8 @@ var kolN = 132000,  // Кол-во итераций
     }
 // ---- Функция проверки кратности степени 2 ------------------------
     function tempSt(i){     
-        // if (i<11) return true; 
-        // if (i==0) return true; 
+        // if (i<90) return true; 
+        if (i==0) return true; 
         if (i==1) return true;
         if (i==3) return true;
         if (i==7) return true;
@@ -205,9 +211,34 @@ var kolN = 132000,  // Кол-во итераций
         return str;
     }
 
-    // btn_test.onclick = function() { 
-    //     temp[0].innerHTML = obrezka(8.29136813207398e+25, 12);
-    // }
+// ---- Масштабирование графика -------------------------------------
+    function masshtGraf(x) {
+        if (Math.abs(x) > Massht) {
+            if (x<0) {
+                return Massht*(-1);
+            } else {
+                return Massht;
+            }
+        } else {
+            return x;
+        }
+    }
+// ---- Получение данных для графиков ------------------------------
+    function dataGrafik(i, mas_x, mas_y) {
+        if (i<100) {
+            iMasBeg1[countgraf] = mas_x+1,
+            yMasBeg1[countgraf] = mas_y;
+            countgraf += 1; 
+        };
+        if (i == (kolN-101)) {
+            countgraf = 0;
+        }
+        if ( (i>(kolN-100)) && (i<kolN) ) {
+            iMasEnd1[countgraf] = mas_x+1,
+            yMasEnd1[countgraf] = mas_y;
+            countgraf += 1; 
+        };
+    }
 
 // ------ Процедура вывода на экран ---------------------------------
     function Vivod(col, k) {   // где k - порядковый номер ячейки табицы куда выводим 
@@ -272,7 +303,9 @@ var kolN = 132000,  // Кол-во итераций
         Numb = 1;
         countPQ = 0;
         count = 0;
-        for (var j = 0; j < kolN; j++) {     
+        countgraf = 0;
+        for (var j = 0; j < kolN; j++) {   
+            dataGrafik(j, j, masshtGraf(masPQ1[j]));  
             if (tempSt(j) == true) {
                 createTr();
                 for (var i = 0; i < kolCol; i++) {
@@ -285,7 +318,73 @@ var kolN = 132000,  // Кол-во итераций
             Numb +=1;
             countPQ += 1;
         };   
+        console.log(iMasBeg1,iMasEnd1);
     }
 
+// -----------------------------------------------------------------
+//      Вывод диагрвм на кнопку "Графики"
+// -----------------------------------------------------------------
+
+    btn_test.onclick = function() { 
+        var ctx = document.getElementById("grafik1").getContext('2d');
+        var myChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: iMasBeg1,              // Масив с данными (по ось х)
+                datasets: [{
+                    label: 'Имя графика',   // Имя графика
+                    data: yMasBeg1,          // Масив с данными (по ось у)
+                    backgroundColor: 
+                        'black'
+                    ,
+                    borderColor: 'none',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        gridLines: 0,       // Отключаем линни сетки (по ось у)
+                        ticks: {
+                            beginAtZero:true
+                        }
+                    }],
+                    xAxes: [{
+                        gridLines: 0        // Отключаем линни сетки (по ось х)
+                    }]
+                }
+            }
+        });
+
+        var ctx = document.getElementById("grafik2").getContext('2d');
+        var myChart2 = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: iMasEnd1,
+                datasets: [{
+                    label: '# of Votes',
+                    data: yMasEnd1,
+                    backgroundColor: 
+                        'black'
+                    ,
+                    borderColor: 'none',
+                    borderWidth: 0
+                }]
+            },
+            options: {
+                scales: {
+                    yAxes: [{
+                        gridLines: 0,
+                        ticks: {
+                            beginAtZero:true
+                        },
+                    }],
+                    xAxes: [{
+                        gridLines: 0
+                    }]
+                }
+            }
+        });
+    }    
 
 }

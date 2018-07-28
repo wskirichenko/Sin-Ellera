@@ -31,7 +31,7 @@ th {
 	border: 1px solid black;
 }
 
-#Kol, .btn-st {
+#Kol, .btn-st, .btn-test {
 	font-size: 1.3em;
 }
 
@@ -52,4 +52,16 @@ p {
 
 .main-img {
 	height: 65px;
+}
+
+.diagramm {
+	display: block;
+	width: 920px;
+	margin: 0 auto;
+}
+.grafik{
+	display: block;
+	float: left;
+	width: 450px;
+	height: 300px;
 }
