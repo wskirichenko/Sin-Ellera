@@ -19,6 +19,9 @@ table {
 	border-spacing: 0;
 	border-collapse: collapse; 
 }
+.tabl-formul {
+	max-width: 110px;
+}
 thead {
 	border: 2px solid black;
 	margin: 0;
@@ -47,6 +50,6 @@ p {
 	margin: 5px;
 }
 
-img {
+.main-img {
 	height: 65px;
 }
