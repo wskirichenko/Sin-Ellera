@@ -1,0 +1,52 @@
+body {
+	margin: 0 auto;
+	/* width: 1200px; */
+}
+h2 {
+	text-align: center;
+}
+.rezv {
+	margin: 0 auto;
+}
+td {
+	border: 1px solid black;
+	margin: 0;
+	padding: 3px;
+	text-align: center;
+}
+
+table {
+	border-spacing: 0;
+	border-collapse: collapse; 
+}
+thead {
+	border: 2px solid black;
+	margin: 0;
+	padding: 3px;
+}
+th {
+	border: 1px solid black;
+}
+
+#Kol, .btn-st {
+	font-size: 1.3em;
+}
+
+.formuly, .vvod, .const, img{
+	display: block;
+	overflow: hidden;
+	margin: 0 auto;
+}
+
+.const > p {
+	font-size: 1.2em;
+}
+p {
+	float: left;
+	font-size: 1.2em;
+	margin: 5px;
+}
+
+img {
+	height: 65px;
+}
