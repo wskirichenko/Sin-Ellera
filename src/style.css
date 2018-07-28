@@ -62,6 +62,6 @@ p {
 .grafik{
 	display: block;
 	float: left;
-	width: 450px;
-	height: 300px;
+	width: 430px;
+	/* height: 300px; */
 }

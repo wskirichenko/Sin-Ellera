@@ -7,6 +7,7 @@ var kolN = 132000,  // Кол-во итераций
     cosFi = Math.cos(fi),
     sinFi = Math.sin(fi),
     ctgFi = Math.cos(fi)/Math.sin(fi),
+    Massht = 2,
     // --------------------------------
     masPQ1 = [],    // Массив с подходящими 1
     masPQ2 = [],    // Массив с подходящими 2
@@ -18,6 +19,14 @@ var kolN = 132000,  // Кол-во итераций
     iMasEnd1 = [],
     yMasBeg1 = [],
     yMasEnd1 = [], 
+    iMasBeg2 = [],
+    iMasEnd2 = [],
+    yMasBeg2 = [],
+    yMasEnd2 = [], 
+    iMasBeg3 = [],
+    iMasEnd3 = [],
+    yMasBeg3 = [],
+    yMasEnd3 = [], 
     countPQ = 0,    // Счётчик для массивов подходящих и модуля
     countgraf = 0,
 
@@ -28,7 +37,6 @@ var kolN = 132000,  // Кол-во итераций
     summ = 0,       // Сумма логорифмов
     count = 0,      // для вывода в табл
     kolcifr = 12,   // Кол-во отображаемых цифр в ячейках (вместе с '.' и '-')
-    Massht = 4,
 
     sell_1 = document.getElementsByClassName('s1'),
     temp = document.getElementsByClassName('temp'),
@@ -224,18 +232,18 @@ var kolN = 132000,  // Кол-во итераций
         }
     }
 // ---- Получение данных для графиков ------------------------------
-    function dataGrafik(i, mas_x, mas_y) {
+    function dataGrafik(i, mas_x, mas_y, rezMasBeginX, rezMasEndX, rezMasBeginY, rezMasEndY,) {
         if (i<100) {
-            iMasBeg1[countgraf] = mas_x+1,
-            yMasBeg1[countgraf] = mas_y;
+            rezMasBeginX[countgraf] = mas_x+1,
+            rezMasEndX[countgraf] = mas_y;
             countgraf += 1; 
         };
         if (i == (kolN-101)) {
             countgraf = 0;
         }
         if ( (i>(kolN-100)) && (i<kolN) ) {
-            iMasEnd1[countgraf] = mas_x+1,
-            yMasEnd1[countgraf] = mas_y;
+            rezMasBeginY[countgraf] = mas_x+1,
+            rezMasEndY[countgraf] = mas_y;
             countgraf += 1; 
         };
     }
@@ -289,8 +297,8 @@ var kolN = 132000,  // Кол-во итераций
                 Numb +=1;                                       // Номер итеррации
                 masPQ1[countPQ] = podhodPQsin_n_1(Numb);              // Подходящие дроби 1
                 masPQ2[countPQ] = podhodPQsin_n(Numb);              // Подходящие дроби 2
-                masPQ3[countPQ] = masPQ1[countPQ] - masPQ2[countPQ]; 
-                masPQ4[countPQ] = 0.5 * masPQ3[countPQ];
+                masPQ3[countPQ] = podhodPQsin_nPi(Numb); 
+                masPQ4[countPQ] = podhodPQsin_n_1_Pi(Numb);
                 
                 masR1[countPQ]  = modulR(masPQ4, countPQ);      // Модуль r
                 masFi1[countPQ] = argumentFi(masPQ4, countPQ);  // Аргумент Fi
@@ -305,7 +313,10 @@ var kolN = 132000,  // Кол-во итераций
         count = 0;
         countgraf = 0;
         for (var j = 0; j < kolN; j++) {   
-            dataGrafik(j, j, masshtGraf(masPQ1[j]));  
+            dataGrafik(j, j, masshtGraf(masPQ1[j]), iMasBeg1, yMasBeg1, iMasEnd1, yMasEnd1);  
+            dataGrafik(j, j, masshtGraf(masFi1[j]), iMasBeg2, yMasBeg2, iMasEnd2, yMasEnd2);  
+            dataGrafik(j, j, masshtGraf(masR1[j]),  iMasBeg3, yMasBeg3, iMasEnd3, yMasEnd3);  
+            
             if (tempSt(j) == true) {
                 createTr();
                 for (var i = 0; i < kolCol; i++) {
@@ -318,22 +329,20 @@ var kolN = 132000,  // Кол-во итераций
             Numb +=1;
             countPQ += 1;
         };   
-        console.log(iMasBeg1,iMasEnd1);
+        // console.log(iMasBeg1,iMasEnd1);
     }
 
 // -----------------------------------------------------------------
 //      Вывод диагрвм на кнопку "Графики"
 // -----------------------------------------------------------------
-
-    btn_test.onclick = function() { 
-        var ctx = document.getElementById("grafik1").getContext('2d');
+    function drowGraphik(ctx, x1, y1, nameG) {
         var myChart = new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: iMasBeg1,              // Масив с данными (по ось х)
+                labels: x1,              // Масив с данными (по ось х)
                 datasets: [{
-                    label: 'Имя графика',   // Имя графика
-                    data: yMasBeg1,          // Масив с данными (по ось у)
+                    label: nameG,   // Имя графика
+                    data: y1,          // Масив с данными (по ось у)
                     backgroundColor: 
                         'black'
                     ,
@@ -355,36 +364,24 @@ var kolN = 132000,  // Кол-во итераций
                 }
             }
         });
+    }
 
-        var ctx = document.getElementById("grafik2").getContext('2d');
-        var myChart2 = new Chart(ctx, {
-            type: 'bar',
-            data: {
-                labels: iMasEnd1,
-                datasets: [{
-                    label: '# of Votes',
-                    data: yMasEnd1,
-                    backgroundColor: 
-                        'black'
-                    ,
-                    borderColor: 'none',
-                    borderWidth: 0
-                }]
-            },
-            options: {
-                scales: {
-                    yAxes: [{
-                        gridLines: 0,
-                        ticks: {
-                            beginAtZero:true
-                        },
-                    }],
-                    xAxes: [{
-                        gridLines: 0
-                    }]
-                }
-            }
-        });
+
+var ctx1 = document.getElementById("grafik1").getContext('2d');
+var ctx2 = document.getElementById("grafik2").getContext('2d');
+var ctx3 = document.getElementById("grafik3").getContext('2d');
+var ctx4 = document.getElementById("grafik4").getContext('2d');
+var ctx5 = document.getElementById("grafik5").getContext('2d');
+var ctx6 = document.getElementById("grafik6").getContext('2d');
+
+
+    btn_test.onclick = function() { 
+        drowGraphik(ctx1, iMasBeg1, yMasBeg1, 'Подходящие Pn/Qn');
+        drowGraphik(ctx2, iMasEnd1, yMasEnd1, 'Подходящие Pn/Qn');
+        drowGraphik(ctx3, iMasBeg2, yMasBeg2, 'Аргумент Fi');
+        drowGraphik(ctx4, iMasEnd2, yMasEnd2, 'Аргумент Fi');        
+        drowGraphik(ctx5, iMasBeg3, yMasBeg3, 'Модуль r');        
+        drowGraphik(ctx6, iMasEnd3, yMasEnd3, 'Модуль r');                
     }    
 
 }
