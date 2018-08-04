@@ -2,7 +2,7 @@ window.onload = function () {
 var kolN = 132000,  // Кол-во итераций
     kolCol = 9,     // Кол-во колонок в табл
     // --- Константы ------------------
-    fi = 1.23456,
+    fi = 1.37,
     epsilon = 0.00001,
     cosFi = Math.cos(fi),
     sinFi = Math.sin(fi),
@@ -27,6 +27,16 @@ var kolN = 132000,  // Кол-во итераций
     iMasEnd3 = [],
     yMasBeg3 = [],
     yMasEnd3 = [], 
+    iMasBeg4 = [],
+    iMasEnd4 = [],
+    yMasBeg4 = [],
+    yMasEnd4 = [], 
+
+    iMasBeg5 = [],
+    iMasEnd5 = [],
+    yMasBeg5 = [],
+    yMasEnd5 = [], 
+
     countPQ = 0,    // Счётчик для массивов подходящих и модуля
     countgraf = 0,
 
@@ -43,6 +53,8 @@ var kolN = 132000,  // Кол-во итераций
     const1 = document.getElementsByClassName('const1'),
     btn = document.getElementsByTagName("button")[0],
     btn_test = document.getElementsByTagName("button")[1];
+    btn_clear = document.getElementsByTagName("button")[2];
+
     // temp[0].innerHTML = Math.sin(fi);
     const1[0].innerHTML = 'fi = ' + fi + ',';
     const1[1].innerHTML = 'epsilon = ' + epsilon + ',';
@@ -84,6 +96,16 @@ var kolN = 132000,  // Кол-во итераций
     function podhodPQsin_n_1_Pi (n) {
         var Rez;
         Rez = Math.sin((n+1)*(Math.PI/2 - epsilon)) / Math.sin(n*(Math.PI/2 - epsilon));
+        return Rez;
+    };
+    function podhodPQsin_n_m_fi(n) {
+        var Rez;
+        Rez = Math.sin(n*(Math.PI/2 - fi)) / Math.sin((n+1)*(Math.PI/2 - fi));
+        return Rez;
+    };
+    function podhodPQsin_n_p_fi(n) {
+        var Rez;
+        Rez = Math.sin(n*(Math.PI/2 + fi)) / Math.sin((n+1)*(Math.PI/2 + fi));
         return Rez;
     };
 
@@ -157,7 +179,7 @@ var kolN = 132000,  // Кол-во итераций
 // ---- Функция проверки кратности степени 2 ------------------------
     function tempSt(i){     
         // if (i<90) return true; 
-        if (i==0) return true; 
+        // if (i==0) return true; 
         if (i==1) return true;
         if (i==3) return true;
         if (i==7) return true;
@@ -248,6 +270,15 @@ var kolN = 132000,  // Кол-во итераций
         };
     }
 
+    function testGrafik(i, mas_x, mas_y, rezMasX, rezMasE_X) {
+        if (i<100) {
+            rezMasX[countgraf] = mas_x+1,
+            rezMasE_X[countgraf] = mas_y;
+            countgraf += 1; 
+        };
+
+    }
+
 // ------ Процедура вывода на экран ---------------------------------
     function Vivod(col, k) {   // где k - порядковый номер ячейки табицы куда выводим 
         switch(col) {          // где col - колонка таблицы в которую будет выводится
@@ -283,6 +314,14 @@ var kolN = 132000,  // Кол-во итераций
             break
         }
     };
+// ---- Отчистка таблицы -------------------------------------------
+    btn_clear.onclick = function () {
+        // mainT.removeChild(tr);
+        var obj=document.querySelectorAll('.tabl')
+        for(let i = 0; i < obj.length; i++) {
+            obj[i].remove();
+        }
+    };
 
 // -----------------------------------------------------------------
 //      Начала вычислений по нажатию на кнопку "Вычислить"
@@ -290,15 +329,17 @@ var kolN = 132000,  // Кол-во итераций
     btn.onclick = function() { 
         kolN = document.getElementsByTagName("input")[0].value;
         ClearAll();
-        masPQ3[-2] = 1;
-        masPQ3[-1] = 1;
+        masPQ1[-1] = 0;
+        masPQ2[-1] = 0;
+        masPQ3[-1] = 0;
+        masPQ4[-1] = 0;
         for (var j = 0; j < kolN; j++) {
             for (var i = 0; i < kolCol; i++) {
                 Numb +=1;                                       // Номер итеррации
-                masPQ1[countPQ] = podhodPQsin_n_1(Numb);              // Подходящие дроби 1
-                masPQ2[countPQ] = podhodPQsin_n(Numb);              // Подходящие дроби 2
-                masPQ3[countPQ] = podhodPQsin_nPi(Numb); 
-                masPQ4[countPQ] = podhodPQsin_n_1_Pi(Numb);
+                masPQ1[countPQ] = podhodPQsin_n_m_fi(Numb);              // Подходящие дроби 1
+                masPQ2[countPQ] = podhodPQsin_n_p_fi(Numb);              // Подходящие дроби 2
+                masPQ3[countPQ] = masPQ1[countPQ-1]; 
+                masPQ4[countPQ] = 0.5 * (masPQ3[countPQ] - masPQ2[countPQ]);
                 
                 masR1[countPQ]  = modulR(masPQ4, countPQ);      // Модуль r
                 masFi1[countPQ] = argumentFi(masPQ4, countPQ);  // Аргумент Fi
@@ -314,9 +355,13 @@ var kolN = 132000,  // Кол-во итераций
         countgraf = 0;
         for (var j = 0; j < kolN; j++) {   
             dataGrafik(j, j, masshtGraf(masPQ1[j]), iMasBeg1, yMasBeg1, iMasEnd1, yMasEnd1);  
-            dataGrafik(j, j, masshtGraf(masFi1[j]), iMasBeg2, yMasBeg2, iMasEnd2, yMasEnd2);  
-            dataGrafik(j, j, masshtGraf(masR1[j]),  iMasBeg3, yMasBeg3, iMasEnd3, yMasEnd3);  
-            
+            dataGrafik(j, j, masshtGraf(masPQ2[j]), iMasBeg2, yMasBeg2, iMasEnd2, yMasEnd2);  
+            dataGrafik(j, j, masshtGraf(masPQ3[j]), iMasBeg3, yMasBeg3, iMasEnd3, yMasEnd3);  
+            // dataGrafik(j, j, masshtGraf(masPQ4[j]), iMasBeg4, yMasBeg4, iMasEnd4, yMasEnd4);  
+            // dataGrafik(j, j, masshtGraf(masR1[j]),  iMasBeg5, yMasBeg5, iMasEnd5, yMasEnd5);  
+            // testGrafik(j, j, masshtGraf(masPQ3[j]), iMasBeg3, yMasBeg3);
+            // testGrafik(j, j, masshtGraf(masPQ4[j]), iMasBeg4, yMasBeg4);
+
             if (tempSt(j) == true) {
                 createTr();
                 for (var i = 0; i < kolCol; i++) {
@@ -373,15 +418,24 @@ var ctx3 = document.getElementById("grafik3").getContext('2d');
 var ctx4 = document.getElementById("grafik4").getContext('2d');
 var ctx5 = document.getElementById("grafik5").getContext('2d');
 var ctx6 = document.getElementById("grafik6").getContext('2d');
+// var ctx7 = document.getElementById("grafik7").getContext('2d');
+// var ctx8 = document.getElementById("grafik8").getContext('2d');
+// var ctx9 = document.getElementById("grafik9").getContext('2d');
+// var ctx10 = document.getElementById("grafik10").getContext('2d');
 
 
     btn_test.onclick = function() { 
         drowGraphik(ctx1, iMasBeg1, yMasBeg1, 'Подходящие Pn/Qn');
         drowGraphik(ctx2, iMasEnd1, yMasEnd1, 'Подходящие Pn/Qn');
-        drowGraphik(ctx3, iMasBeg2, yMasBeg2, 'Аргумент Fi');
-        drowGraphik(ctx4, iMasEnd2, yMasEnd2, 'Аргумент Fi');        
-        drowGraphik(ctx5, iMasBeg3, yMasBeg3, 'Модуль r');        
-        drowGraphik(ctx6, iMasEnd3, yMasEnd3, 'Модуль r');                
+        drowGraphik(ctx3, iMasBeg2, yMasBeg2, 'Подходящие Pn/Qn 2');
+        drowGraphik(ctx4, iMasEnd2, yMasEnd2, 'Подходящие Pn/Qn 2');        
+        drowGraphik(ctx5, iMasBeg3, yMasBeg3, 'Подходящие Pn/Qn 3');        
+        drowGraphik(ctx6, iMasEnd3, yMasEnd3, 'Подходящие Pn/Qn 3');                
+        // drowGraphik(ctx7, iMasBeg4, yMasBeg4, 'Модуль r');                
+        // drowGraphik(ctx8, iMasEnd4, yMasEnd4, 'Модуль r');        
+        // drowGraphik(ctx9, iMasBeg5, yMasBeg5, 'Test');                
+        // drowGraphik(ctx10, iMasEnd5, yMasEnd5, 'Test');  
+                
     }    
 
 }
