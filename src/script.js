@@ -54,6 +54,7 @@ var kolN = 132000,  // Кол-во итераций
     btn = document.getElementsByTagName("button")[0],
     btn_test = document.getElementsByTagName("button")[1];
     btn_clear = document.getElementsByTagName("button")[2];
+    // btn_save = document.getElementsByTagName("button")[3];
 
     // temp[0].innerHTML = Math.sin(fi);
     const1[0].innerHTML = 'fi = ' + fi + ',';
@@ -105,7 +106,7 @@ var kolN = 132000,  // Кол-во итераций
     };
     function podhodPQsin_n_p_fi(n) {
         var Rez;
-        Rez = Math.sin(n*(Math.PI/2 + fi)) / Math.sin((n+1)*(Math.PI/2 + fi));
+        Rez = Math.sin((n+1)*(Math.PI/2 + fi)) / Math.sin(n*(Math.PI/2 + fi));
         return Rez;
     };
 
@@ -178,7 +179,7 @@ var kolN = 132000,  // Кол-во итераций
     }
 // ---- Функция проверки кратности степени 2 ------------------------
     function tempSt(i){     
-        // if (i<90) return true; 
+        // if (i<50) return true; 
         // if (i==0) return true; 
         if (i==1) return true;
         if (i==3) return true;
@@ -339,7 +340,7 @@ var kolN = 132000,  // Кол-во итераций
                 masPQ1[countPQ] = podhodPQsin_n_m_fi(Numb);              // Подходящие дроби 1
                 masPQ2[countPQ] = podhodPQsin_n_p_fi(Numb);              // Подходящие дроби 2
                 masPQ3[countPQ] = masPQ1[countPQ-1]; 
-                masPQ4[countPQ] = 0.5 * (masPQ3[countPQ] - masPQ2[countPQ]);
+                masPQ4[countPQ] = (masPQ3[countPQ] - masPQ2[countPQ]) * 0.5;
                 
                 masR1[countPQ]  = modulR(masPQ4, countPQ);      // Модуль r
                 masFi1[countPQ] = argumentFi(masPQ4, countPQ);  // Аргумент Fi
@@ -354,9 +355,9 @@ var kolN = 132000,  // Кол-во итераций
         count = 0;
         countgraf = 0;
         for (var j = 0; j < kolN; j++) {   
-            dataGrafik(j, j, masshtGraf(masPQ1[j]), iMasBeg1, yMasBeg1, iMasEnd1, yMasEnd1);  
+            dataGrafik(j, j, masshtGraf(masPQ3[j]), iMasBeg1, yMasBeg1, iMasEnd1, yMasEnd1);  
             dataGrafik(j, j, masshtGraf(masPQ2[j]), iMasBeg2, yMasBeg2, iMasEnd2, yMasEnd2);  
-            dataGrafik(j, j, masshtGraf(masPQ3[j]), iMasBeg3, yMasBeg3, iMasEnd3, yMasEnd3);  
+            dataGrafik(j, j, masshtGraf(masPQ4[j]), iMasBeg3, yMasBeg3, iMasEnd3, yMasEnd3);  
             // dataGrafik(j, j, masshtGraf(masPQ4[j]), iMasBeg4, yMasBeg4, iMasEnd4, yMasEnd4);  
             // dataGrafik(j, j, masshtGraf(masR1[j]),  iMasBeg5, yMasBeg5, iMasEnd5, yMasEnd5);  
             // testGrafik(j, j, masshtGraf(masPQ3[j]), iMasBeg3, yMasBeg3);
