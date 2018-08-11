@@ -282,36 +282,43 @@ var kolN = 132000,  // Кол-во итераций
 
 // ------ Процедура вывода на экран ---------------------------------
     function Vivod(col, k) {   // где k - порядковый номер ячейки табицы куда выводим 
+        var TsZ = '',
+            csvTab = document.getElementById("csv_tab").checked;    // Флаг для записи в формате csv
+        if (csvTab === true) {
+            TsZ = ';';
+        } else {
+            TsZ = '';
+        };
         switch(col) {          // где col - колонка таблицы в которую будет выводится
             case 0 :    // Номер (1 столбца)
-                sell_1[k].innerHTML = Numb;
+                sell_1[k].innerHTML = Numb + TsZ;
                 break
             case 1:     // Подходящих Pn1/Qn1 (2 столбец)
-                sell_1[k].innerHTML = obrezka(masPQ1[countPQ], kolcifr);
+                sell_1[k].innerHTML = obrezka(masPQ1[countPQ], kolcifr) + TsZ;
                 break
             case 2:     // Подходящих Pn2/Qn2 (3 столбец)
-                sell_1[k].innerHTML = obrezka(masPQ2[countPQ], kolcifr);
+                sell_1[k].innerHTML = obrezka(masPQ2[countPQ], kolcifr) + TsZ;
                 break
             case 3:     // Подходящих Pn3/Qn3 (4 столбец)
-                sell_1[k].innerHTML = obrezka(masPQ3[countPQ], kolcifr);
+                sell_1[k].innerHTML = obrezka(masPQ3[countPQ], kolcifr) + TsZ;
                 break
             case 4:     // Подходящих Pn4/Qn4 (5 столбец)
-                sell_1[k].innerHTML = obrezka(masPQ4[countPQ], kolcifr);
+                sell_1[k].innerHTML = obrezka(masPQ4[countPQ], kolcifr) + TsZ;
                 break    
             case 5:     // Модуль r (6 столбец)
-                sell_1[k].innerHTML = obrezka(masR1[countPQ], kolcifr);
+                sell_1[k].innerHTML = obrezka(masR1[countPQ], kolcifr) + TsZ;
                 break 
             case 6:     // Аргумент fi (7 столбец)
-                sell_1[k].innerHTML = obrezka(masFi1[countPQ], kolcifr);
+                sell_1[k].innerHTML = obrezka(masFi1[countPQ], kolcifr) + TsZ;
                 break 
             case 7:     // Погрешность модуля r 8 столбец)
-                sell_1[k].innerHTML = obrezka(Math.abs(sinFi - masR1[countPQ]), kolcifr);
+                sell_1[k].innerHTML = obrezka(Math.abs(sinFi - masR1[countPQ]), kolcifr) + TsZ;
                 break 
             case 8:     // Погрешность аргумента fi (9 столбец)
-                sell_1[k].innerHTML = obrezka(Math.abs(0 - masFi1[countPQ]), kolcifr);
+                sell_1[k].innerHTML = obrezka(Math.abs(0 - masFi1[countPQ]), kolcifr) + TsZ;
                 break 
             default:
-                sell_1[k].innerHTML = 'нет';
+                sell_1[k].innerHTML = 'нет' + TsZ;
             break
         }
     };
