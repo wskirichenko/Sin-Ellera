@@ -1,8 +1,8 @@
 window.onload = function () {
 var kolN = 132000,  // Кол-во итераций
-    kolCol = 9,     // Кол-во колонок в табл
+    kolCol = 8,     // Кол-во колонок в табл
     // --- Константы ------------------
-    fi = 1.37,
+    fi = 0.2,
     epsilon = 0.00001,
     cosFi = Math.cos(fi),
     sinFi = Math.sin(fi),
@@ -58,8 +58,8 @@ var kolN = 132000,  // Кол-во итераций
 
     // temp[0].innerHTML = Math.sin(fi);
     const1[0].innerHTML = 'fi = ' + fi + ',';
-    const1[1].innerHTML = 'epsilon = ' + epsilon + ',';
-    const1[2].innerHTML = 'cos(fi) = ' + obrezka(Math.cos(fi), kolcifr) + ',';
+    // const1[1].innerHTML = 'epsilon = ' + epsilon + ',';
+    // const1[2].innerHTML = 'cos(fi) = ' + obrezka(Math.cos(fi), kolcifr) + ',';
     const1[3].innerHTML = 'sin(fi) = ' + obrezka(Math.sin(fi), kolcifr) + ',';
     // const1[4].innerHTML = 'ctg(fi) = ' + obrezka(ctgFi, kolcifr) + ',';
 
@@ -294,27 +294,27 @@ var kolN = 132000,  // Кол-во итераций
                 sell_1[k].innerHTML = Numb + TsZ;
                 break
             case 1:     // Подходящих Pn1/Qn1 (2 столбец)
-                sell_1[k].innerHTML = obrezka(masPQ1[countPQ], kolcifr) + TsZ;
+                sell_1[k].innerHTML = obrezka(masPQ3[countPQ], kolcifr) + TsZ;
                 break
             case 2:     // Подходящих Pn2/Qn2 (3 столбец)
                 sell_1[k].innerHTML = obrezka(masPQ2[countPQ], kolcifr) + TsZ;
                 break
-            case 3:     // Подходящих Pn3/Qn3 (4 столбец)
-                sell_1[k].innerHTML = obrezka(masPQ3[countPQ], kolcifr) + TsZ;
-                break
-            case 4:     // Подходящих Pn4/Qn4 (5 столбец)
+            // case 3:     // Подходящих Pn3/Qn3 (4 столбец)
+            //     sell_1[k].innerHTML = obrezka(masPQ3[countPQ], kolcifr) + TsZ;
+            //     break
+            case 3:     // Подходящих Pn4/Qn4 (5 столбец)
                 sell_1[k].innerHTML = obrezka(masPQ4[countPQ], kolcifr) + TsZ;
                 break    
-            case 5:     // Модуль r (6 столбец)
+            case 4:     // Модуль r (6 столбец)
                 sell_1[k].innerHTML = obrezka(masR1[countPQ], kolcifr) + TsZ;
                 break 
-            case 6:     // Аргумент fi (7 столбец)
+            case 5:     // Аргумент fi (7 столбец)
                 sell_1[k].innerHTML = obrezka(masFi1[countPQ], kolcifr) + TsZ;
                 break 
-            case 7:     // Погрешность модуля r 8 столбец)
+            case 6:     // Погрешность модуля r 8 столбец)
                 sell_1[k].innerHTML = obrezka(Math.abs(sinFi - masR1[countPQ]), kolcifr) + TsZ;
                 break 
-            case 8:     // Погрешность аргумента fi (9 столбец)
+            case 7:     // Погрешность аргумента fi (9 столбец)
                 sell_1[k].innerHTML = obrezka(Math.abs(0 - masFi1[countPQ]), kolcifr) + TsZ;
                 break 
             default:
@@ -433,11 +433,11 @@ var ctx6 = document.getElementById("grafik6").getContext('2d');
 
 
     btn_test.onclick = function() { 
-        drowGraphik(ctx1, iMasBeg1, yMasBeg1, 'Подходящие Pn/Qn');
-        drowGraphik(ctx2, iMasEnd1, yMasEnd1, 'Подходящие Pn/Qn');
-        drowGraphik(ctx3, iMasBeg2, yMasBeg2, 'Подходящие Pn/Qn 2');
-        drowGraphik(ctx4, iMasEnd2, yMasEnd2, 'Подходящие Pn/Qn 2');        
-        drowGraphik(ctx5, iMasBeg3, yMasBeg3, 'Подходящие Pn/Qn 3');        
+        drowGraphik(ctx1, iMasBeg1, yMasBeg1, 'Pn1/Qn1 со сдвигом на 1');
+        drowGraphik(ctx2, iMasEnd1, yMasEnd1, 'Pn1/Qn1 со сдвигом на 1');
+        drowGraphik(ctx3, iMasBeg2, yMasBeg2, 'Подходящие Pn3/Qn3');
+        drowGraphik(ctx4, iMasEnd2, yMasEnd2, 'Подходящие Pn3/Qn3');        
+        drowGraphik(ctx5, iMasBeg3, yMasBeg3, 'Разность Pn1/Qn1 - Pn3/Qn3');        
         drowGraphik(ctx6, iMasEnd3, yMasEnd3, 'Подходящие Pn/Qn 3');                
         // drowGraphik(ctx7, iMasBeg4, yMasBeg4, 'Модуль r');                
         // drowGraphik(ctx8, iMasEnd4, yMasEnd4, 'Модуль r');        

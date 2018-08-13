@@ -30,24 +30,24 @@
         </p>
     </div>
     <div class="formuly">
-        <img class="main-img" src="images/formula01.jpg" alt="Формула 1">
+        <img class="main-img" src="images/formula04.jpg" alt="Формула 1">
     </div>
     <!-- <h2>Табл №</h2> -->
     <table class="rezv">
         <thead>
             <tr>
                 <th scope="col" class="k1">n</th>
-                <th scope="col" class="k2">Pn/Qn = 
-                    <img class="tabl-formul" src="images/sin_n_1.jpg" alt="sin[(n+1)fi]">
+                <th scope="col" class="k2">Pn1/Qn1 </br>Сдвиг на 1
+                    <img class="tabl-formul" src="images/sin_n_m_fi.jpg" alt="sin[(n+1)fi]">
                 </th>
                 <th scope="col" class="k2">Pn2/Qn2 = 
-                    <img class="tabl-formul" src="images/sin_n.jpg" alt="sin[(n+1)fi]">
+                    <img class="tabl-formul" src="images/sin_n_p_fi.jpg" alt="sin[(n+1)fi]">
                 </th>
-                <th scope="col" class="k2">Pn3/Qn3 = 
-                    <img class="tabl-formul" src="images/sin_n_pi.jpg" alt="sin[(n+1)fi]">
-                </th>
-                <th scope="col" class="k2">Pn4/Qn4 = 
-                    <img class="tabl-formul" src="images/sin_n_1_pi.jpg" alt="sin[(n+1)fi]">
+                <!-- <th scope="col" class="k2">Pn3/Qn3 </br>Сдвиг на 1</br> назад Pn1/Qn1
+                    - <img class="tabl-formul" src="images/sin_n_pi.jpg" alt="sin[(n+1)fi]"> 
+                </th> -->
+                <th scope="col" class="k2">Разность </br>(Pn1/Qn1 - </br>Pn2/Qn2)*0,5
+                    <!-- <img class="tabl-formul" src="images/sin_n_1_pi.jpg" alt="sin[(n+1)fi]"> -->
                 </th>
                 <th scope="col" class="k3">Значение </br>модуля r</th>
                 <th scope="col" class="k4">Значение </br>угла fi</th>
@@ -61,6 +61,7 @@
     </table>
 
     <!-- Вывод диаграм -->
+      <img class="main-img" src="images/sin_n_m_fi.jpg" alt="sin[(n+1)fi]">
     <div class="diagramm">
         <div class="grafik">
             <canvas id="grafik1">
@@ -72,16 +73,18 @@
 
             </canvas>
         </div>
+        <img class="main-img" src="images/sin_n_p_fi.jpg" alt="sin[(n+1)fi]">
         <div class="grafik">
             <canvas id="grafik3">
 
             </canvas>
         </div>
-        <div class="grafik">
+        <div class="grafik pusto">
             <canvas id="grafik4">
 
             </canvas>
         </div>
+        <img class="main-img" src="images/formula04.jpg" alt="Формула 1">
         <div class="grafik">
             <canvas id="grafik5">
 
